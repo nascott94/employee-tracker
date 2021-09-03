@@ -40,6 +40,7 @@ function firstQuestion() {
         "View department",
         "View role",
         "View employee",
+        "Done",
       ],
     })
     //switch statement
@@ -62,9 +63,6 @@ function firstQuestion() {
           break;
         case "View employee":
           viewEmployee();
-          break;
-        case "Update role":
-          updateRole();
           break;
         default:
           quit();
@@ -159,4 +157,31 @@ function addEmployee() {
         }
       );
     });
+}
+
+function viewDepartment() {
+  let query = "SELECT * FROM department";
+  db.query(query, function (err, res) {
+    if (err) throw err;
+    console.table(res);
+    firstQuestion();
+  });
+}
+
+function viewRole() {
+  let query = "SELECT * FROM role";
+  db.query(query, function (err, res) {
+    if (err) throw err;
+    console.table(res);
+    firstQuestion();
+  });
+}
+
+function viewEmployee() {
+  let query = "SELECT * FROM employee";
+  db.query(query, function (err, res) {
+    if (err) throw err;
+    console.table(res);
+    firstQuestion();
+  });
 }
