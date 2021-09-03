@@ -15,6 +15,12 @@ const db = mysql.createConnection(
   console.log(`Connected to the tracker_db database.`)
 );
 
+db.connect(function (err) {
+  if (err) throw err;
+  console.log("Connected to db");
+  firstQuestion();
+});
+
 // db.query("SELECT * FROM department", function (err, results) {
 //   console.log(results);
 //   firstQuestion();
@@ -91,24 +97,61 @@ function addRole() {
     .prompt([
       {
         type: "input",
-        message: "What is the name of the role?",
         name: "roleName",
+        message: "What is the name of the role?",
       },
       {
         type: "input",
+        name: "salary",
         message: "What is the salary?",
-        name: "salaryTotal",
       },
       {
         type: "input",
+        name: "departId",
         message: "What is the id?",
-        name: "deptID",
       },
     ])
     .then(function (answer) {
       db.query(
         "INSERT INTO role (title, salary, department_id VALUES(?, ?, ?)",
-        [answer.roleName, answer.salaryTotal, answer.departID],
+        [answer.roleName, answer.salary, answer.departID],
+        function (err, res) {
+          if (err) throw err;
+          console.table(res);
+          firstQuestion();
+        }
+      );
+    });
+}
+
+function addEmployee() {
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "firstName",
+        message: "What is the employee's first name?",
+      },
+      {
+        type: "input",
+        name: "lastName",
+        message: "What is the employee's last name?",
+      },
+      {
+        type: "input",
+        name: "roleId",
+        message: "What is the employee role id?",
+      },
+      {
+        type: "input",
+        name: "managerId",
+        message: "What is the manager id?",
+      },
+    ])
+    .then(function (answer) {
+      db.query(
+        "INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES(?, ?, ?, ?)",
+        [answer.firstName, answer.lastName, answer.roleId, answer.managerId],
         function (err, res) {
           if (err) throw err;
           console.table(res);
