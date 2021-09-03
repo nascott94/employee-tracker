@@ -26,7 +26,7 @@ db.connect(function (err) {
 //   firstQuestion();
 // });
 
-//start of first questions when user runs node
+//start of first questions when user runs node and gives user the choice to add what action they would like to perform
 function firstQuestion() {
   inquirer
     .prompt({
@@ -43,7 +43,7 @@ function firstQuestion() {
         "Done",
       ],
     })
-    //switch statement
+    //switch statements
     .then(function (result) {
       switch (result.option) {
         case "Add department":
@@ -69,7 +69,7 @@ function firstQuestion() {
       }
     });
 }
-
+//if adding a department is chosen then a function will run to ask user questions about department and then add it to the department table
 function addDepartment() {
   inquirer
     .prompt({
@@ -79,7 +79,7 @@ function addDepartment() {
     })
     .then(function (answer) {
       db.query(
-        "INSERT INTO deparment (name) VALUES (?)",
+        "INSERT INTO deparment (department_name)",
         [answer.deptName],
         function (err, res) {
           if (err) throw err;
@@ -89,7 +89,7 @@ function addDepartment() {
       );
     });
 }
-
+//user chose to add a role then a function for role questions and then add that info into the role table
 function addRole() {
   inquirer
     .prompt([
@@ -111,7 +111,7 @@ function addRole() {
     ])
     .then(function (answer) {
       db.query(
-        "INSERT INTO role (title, salary, department_id VALUES(?, ?, ?)",
+        "INSERT INTO role (title, salary, department_id)",
         [answer.roleName, answer.salary, answer.departID],
         function (err, res) {
           if (err) throw err;
@@ -122,6 +122,7 @@ function addRole() {
     });
 }
 
+//user adds an employee then is prompted with employee questions and then add those answers to the employee table
 function addEmployee() {
   inquirer
     .prompt([
@@ -148,7 +149,7 @@ function addEmployee() {
     ])
     .then(function (answer) {
       db.query(
-        "INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES(?, ?, ?, ?)",
+        "INSERT INTO employee (first_name, last_name, role_id, manager_id)",
         [answer.firstName, answer.lastName, answer.roleId, answer.managerId],
         function (err, res) {
           if (err) throw err;
@@ -158,7 +159,7 @@ function addEmployee() {
       );
     });
 }
-
+//the user can then view the department, roles and employee table with updated info...
 function viewDepartment() {
   let query = "SELECT * FROM department";
   db.query(query, function (err, res) {
