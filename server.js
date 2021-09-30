@@ -79,8 +79,8 @@ function addDepartment() {
     })
     .then(function (answer) {
       db.query(
-        "INSERT INTO deparment (department_name)",
-        [answer.deptName],
+        `INSERT INTO departments (departments_name)
+        VALUES ('${answer.deptName}');`,
         function (err, res) {
           if (err) throw err;
           console.table(res);
@@ -106,13 +106,13 @@ function addRole() {
       {
         type: "input",
         name: "departId",
-        message: "What is the id?",
+        message: "What is the department id?",
       },
     ])
     .then(function (answer) {
       db.query(
-        "INSERT INTO role (title, salary, department_id)",
-        [answer.roleName, answer.salary, answer.departID],
+        `INSERT INTO role (title, salary, department_id) VALUES('${answer.roleName}', '${answer.salary}', '${answer.departId}')`,
+
         function (err, res) {
           if (err) throw err;
           console.table(res);
@@ -161,7 +161,7 @@ function addEmployee() {
 }
 //the user can then view the department, roles and employee table with updated info...
 function viewDepartment() {
-  let query = "SELECT * FROM department";
+  let query = "SELECT * FROM departments";
   db.query(query, function (err, res) {
     if (err) throw err;
     console.table(res);
