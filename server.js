@@ -112,7 +112,6 @@ function addRole() {
     .then(function (answer) {
       db.query(
         `INSERT INTO role (title, salary, department_id) VALUES('${answer.roleName}', '${answer.salary}', '${answer.departId}')`,
-
         function (err, res) {
           if (err) throw err;
           console.table(res);
@@ -149,8 +148,7 @@ function addEmployee() {
     ])
     .then(function (answer) {
       db.query(
-        "INSERT INTO employee (first_name, last_name, role_id, manager_id)",
-        [answer.firstName, answer.lastName, answer.roleId, answer.managerId],
+        `INSERT INTO role (first_name, last_name, role_id, manager_id) VALUES('${answer.firstName}', '${answer.lastName}', '${answer.roleId}', '${answer.managerId}' )`,
         function (err, res) {
           if (err) throw err;
           console.table(res);
