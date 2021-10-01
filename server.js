@@ -148,7 +148,7 @@ function addEmployee() {
     ])
     .then(function (answer) {
       db.query(
-        `INSERT INTO role (first_name, last_name, role_id, manager_id) VALUES('${answer.firstName}', '${answer.lastName}', '${answer.roleId}', '${answer.managerId}' )`,
+        `INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES('${answer.firstName}', '${answer.lastName}', '${answer.roleId}', '${answer.managerId}' )`,
         function (err, res) {
           if (err) throw err;
           console.table(res);
@@ -183,4 +183,8 @@ function viewEmployee() {
     console.table(res);
     firstQuestion();
   });
+}
+
+function quit() {
+  console.log("All done!");
 }
